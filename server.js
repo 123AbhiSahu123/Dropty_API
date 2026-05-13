@@ -9,7 +9,7 @@ app.use('/api', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-sequelize.sync()
+sequelize.sync({ alter: true })     //after development remove this alter: true, 
 .then(()=> {
     console.log('Database Connected!');
     app.listen(PORT, () => console.log(`Server running on port ${PORT} (PostgreSQL mode)`));

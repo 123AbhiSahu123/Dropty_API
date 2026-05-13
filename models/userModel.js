@@ -21,7 +21,36 @@ const User = sequelize.define('User', {
     timestamps: true
 });
 
-export default User;
+const Post = sequelize.define('Post', {
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    userId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    }
+}, {
+    tableName: 'postsname',
+    timestamps: true
+});
+
+// RELATIONS 1 User -> many Posts
+User.hasMany(Post, {
+    foreignKey: 'userId'
+});
+
+// Har post ek user ka hoga
+Post.belongsTo(User, {
+    foreignKey: 'userId'
+});
+
+
+export { User, Post };
 
 
 
