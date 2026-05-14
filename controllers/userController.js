@@ -60,6 +60,8 @@ export const getProfile = async (req, res) => {
     }
 };
 
+
+// 4. Create Post API (Protected)
 export const createPost = async (req, res) => {
     try {
         const { title, content } = req.body;
@@ -75,6 +77,28 @@ export const createPost = async (req, res) => {
 }
 
 
+//delete post
+export const deletePost = async(req, res) => {
+    try{
+        const {id} = req.params;
+        const userId = req.user.id;
+
+        const post =  await Post.findByPk(id);
+        if(!post) {
+            return res.status(404).json({message:"Post don't have!"});
+        }
+        if (post.userId !== userId) {
+            return res.status(403).json({message: "Post sucessfully delete!"})
+        }
+        await post.destroy();
+         res.status(200).json({message: "Post sucessfully delete!"})
+    }
+
+
+    catch (error) {
+        res.status(500).json({error:error,message});
+    }
+}
 
 
 
@@ -88,16 +112,7 @@ export const createPost = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-// import User from '../models/userModel.js';
+// import { User, Post } from '../models/userModel.js';
 // import bcrypt from 'bcryptjs';
 // import jwt from 'jsonwebtoken';
 
@@ -119,11 +134,11 @@ export const createPost = async (req, res) => {
 // };
 
 // // 2.) Login
-// export const loginUser = async(req, res) => {
+// export const loginUser = async (req, res) => {
 //     try {
-//         const {email, password} = req.body;
+//         const { email, password } = req.body;
 
-//         const user = await User.findOne({ where: { email }});
+//         const user = await User.findOne({ where: { email } });
 //         if (!user) return res.status(404).json({ message: "User nahi mila!" });
 
 //         // Password check karna
@@ -131,9 +146,15 @@ export const createPost = async (req, res) => {
 //         if (!isMatch) return res.status(400).json({ message: "Galat password!" });
 
 //         // JWT Token banana (Secret key ko .env mein rakhein)
-//         const token = jwt.sign({ id: user.id }, 'secret_key_123', { expiresIn: '1h' });
+//         const token = jwt.sign({
+//             user: { id: user.id } // Object structure (aapka dusra syntax)
+//         },
+//             process.env.JWT_SECRET, // Secure Environment Variable
+//             {
+//                 expiresIn: '1d' // Expiry (aapka pehla syntax)
+//             });
 
-//         res.status(200).json({ message: "Login Success!", token });
+//         res.status(200).cookie("token", token).json({ message: "Login Success!", token });
 //     } catch (error) {
 //         res.status(500).json({ error: error.message });
 //     }
@@ -151,6 +172,21 @@ export const createPost = async (req, res) => {
 //         res.status(500).json({ error: error.message });
 //     }
 // };
+
+// export const createPost = async (req, res) => {
+//     try {
+//         const { title, content } = req.body;
+//         const post = await Post.create({
+//             title,
+//             content,
+//             userId: req.user.id
+//         });
+//         res.status(201).json({ message: "Post created!", post });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
+
 
 
 

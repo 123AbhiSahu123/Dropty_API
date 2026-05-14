@@ -26,9 +26,6 @@ sequelize.sync({ alter: true })     //after development remove this alter: true,
 
 
 
-
-
-
 // import express from 'express';
 // import sequelize from './config/db.js';
 // import userRoutes from './routes/userRoutes.js';
@@ -40,12 +37,14 @@ sequelize.sync({ alter: true })     //after development remove this alter: true,
 
 // const PORT = process.env.PORT || 5000;
 
-// sequelize.sync()
+// sequelize.sync({ alter: true })     //after development remove this alter: true, 
 // .then(()=> {
 //     console.log('Database Connected!');
 //     app.listen(PORT, () => console.log(`Server running on port ${PORT} (PostgreSQL mode)`));
 // })
 // .catch(err => console.log('Error: ' +err));
+
+
 
 
 
