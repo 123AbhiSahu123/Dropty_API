@@ -39,6 +39,24 @@ const Post = sequelize.define('Post', {
     timestamps: true
 });
 
+const comment = sequelize.define('Comment', {
+    CommentText : {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    postId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    userId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    }
+}, {
+    tableName: 'comment',
+    timestamps: true
+});
+
 // RELATIONS 1 User -> many Posts
 User.hasMany(Post, {
     foreignKey: 'userId'

@@ -76,7 +76,6 @@ export const createPost = async (req, res) => {
     }
 }
 
-
 //delete post
 export const deletePost = async(req, res) => {
     try{
@@ -99,6 +98,7 @@ export const deletePost = async(req, res) => {
         res.status(500).json({error:error,message});
     }
 }
+
 
 
 
