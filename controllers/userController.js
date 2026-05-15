@@ -28,11 +28,11 @@ export const loginUser = async (req, res) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ where: { email } });
-        if (!user) return res.status(404).json({ message: "User nahi mila!" });
+        if (!user) return res.status(404).json({ message: "User don't find!" });
 
         // Password check karna
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Galat password!" });
+        if (!isMatch) return res.status(400).json({ message: "Wrong password!" });
 
         // JWT Token banana (Secret key ko .env mein rakhein)
         const token = jwt.sign({
@@ -81,10 +81,11 @@ export const createPost = async (req, res) => {
 //delete post
 export const deletePost = async(req, res) => {
     try{
-        const {id} = req.params;
+        const {id} = req.params;  // access  direct value 
+    //  const id = req.params;   // object form id get 
         const userId = req.user.id;
 
-        const post =  await Post.findByPk(id);
+        const post =  await Post.findByPk(id);  // pk = primary key
         if(!post) {
             return res.status(404).json({message:"Post don't have!"});
         }
@@ -121,7 +122,8 @@ export const commentPost = async (req, res) => {
         });
         res.status(201).json({ 
             message: "Comment on post Sucessfull!", comment });  // data object
-    } catch (error) {
+    } 
+    catch (error) {
         res.status(500).json({ 
             error: error.message 
         });

@@ -70,16 +70,4 @@ Post.belongsTo(User, {
     foreignKey: 'userId'
 });
 
-export { User, Post, Comment };
-
-
-
-
-
-
-
-
-
-
-
-
+export { User, Post, Comment }
